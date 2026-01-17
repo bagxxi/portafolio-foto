@@ -77,11 +77,16 @@ Crea un archivo `.env` en la raíz del proyecto:
 
 ```env
 # Email de contacto (codificado en base64)
-CONTACT_EMAIL_ENCODED=Y29udGFjdG9AYWxlamFuZHJhYmFsYm9udGluLmNs
+# Para generar: echo -n "tu_email@ejemplo.com" | base64
+CONTACT_EMAIL_ENCODED=tu_email_codificado_en_base64
 
 # API Key de Resend (opcional, para envío de emails)
 RESEND_API_KEY=tu_api_key_aqui
 ```
+
+**Nota:** Para generar el email codificado en base64:
+- **Linux/Mac:** `echo -n "tu_email@ejemplo.com" | base64`
+- **Windows PowerShell:** `[Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("tu_email@ejemplo.com"))`
 
 4. **Iniciar servidor de desarrollo**
 
