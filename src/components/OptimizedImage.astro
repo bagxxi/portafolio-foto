@@ -1,0 +1,106 @@
+---
+interface Props {
+    src: string;
+    alt: string;
+    loading?: "lazy" | "eager";
+    fetchpriority?: "high" | "low" | "auto";
+    class?: string;
+}
+
+const {
+    src,
+    alt,
+    loading = "lazy",
+    fetchpriority = "auto",
+    class: className = "",
+} = Astro.props;
+
+// Generar rutas para WebP
+const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+
+// Verificar si existe el archivo WebP en el sistema de archivos
+import { existsSync } from 'fs';
+import { join } from 'path';
+
+const publicPath = join(process.cwd(), 'public', src.replace(/^\//, ''));
+const webpPath = join(process.cwd(), 'public', webpSrc.replace(/^\//, ''));
+const hasWebP = existsSync(webpPath);
+---
+
+{hasWebP ? (
+    <picture class={className}>
+        <!-- WebP para navegadores modernos -->
+        <source srcset={webpSrc} type="image/webp" />
+
+        <!-- Fallback a JPG/PNG original -->
+        <img
+            src={src}
+            alt={alt}
+            loading={loading}
+            decoding="async"
+            fetchpriority={fetchpriority}
+        />
+    </picture>
+) : (
+    <!-- Si no existe WebP, usar solo JPG -->
+    <img
+        src={src}
+        alt={alt}
+        loading={loading}
+        decoding="async"
+        fetchpriority={fetchpriority}
+        class={className}
+    />
+)}
+
+<style>
+    picture {
+        display: contents;
+    }
+
+    picture img,
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        display: block;
+        /* Protecciones de imagen */
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        pointer-events: auto;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+    }
+</style>
+
+<script>
+    // Protección contra click derecho y drag-and-drop
+    document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('img, picture');
+        
+        images.forEach(img => {
+            // Prevenir menú contextual (click derecho)
+            img.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Prevenir drag and drop
+            img.addEventListener('dragstart', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Prevenir selección
+            img.addEventListener('selectstart', (e) => {
+                e.preventDefault();
+                return false;
+            });
+        });
+    });
+</script>

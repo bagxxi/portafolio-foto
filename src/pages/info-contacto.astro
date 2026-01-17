@@ -1,0 +1,442 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+    title="Info & Contacto"
+    description="Información sobre Alejandra Balbontín y formulario de contacto"
+>
+    <div class="container info-container">
+        <!-- Hero Image Section -->
+        <div class="hero-section">
+            <img
+                src="/images/hero/04.jpg"
+                alt="Alejandra Balbontín"
+                class="hero-image"
+            />
+            <div class="hero-overlay">
+                <h1 class="hero-title" data-t="hero_title">
+                    Portrait Photography
+                </h1>
+                <p class="hero-subtitle" data-t="hero_subtitle">
+                    in Santiago de Chile
+                </p>
+            </div>
+        </div>
+
+        <!-- Info Sections -->
+        <div class="content-wrapper">
+            <div class="info-grid">
+                <div class="info-col">
+                    <p class="small-tag" data-t="bio_tag">UN POCO SOBRE MÍ</p>
+                    <h2 data-t="bio_title">Biografía</h2>
+                    <p data-t="bio_p1">
+                        Soy una fotógrafa chilena, actualmente trabajando en
+                        Santiago de Chile.
+                    </p>
+                    <p data-t="bio_p2">
+                        Conocida por mi trabajo en retratos, editorial y
+                        comercial, contribuyo regularmente a varias
+                        publicaciones impresas en Chile y el extranjero, así
+                        como en línea.
+                    </p>
+                </div>
+
+                <div class="info-col">
+                    <p class="small-tag" data-t="work_tag">SOBRE MI PROCESO</p>
+                    <h2 data-t="work_title">Mi Trabajo</h2>
+                    <p data-t="work_p1">
+                        Con un enfoque minimalista y sutil, me esfuerzo por
+                        crear un trabajo que sea claro y sin compromisos.
+                    </p>
+                    <p data-t="work_p2">
+                        He recibido múltiples premios internacionales en
+                        fotografía de retratos y editorial, así como ganadora
+                        del Premio Miller 2018 por Fotografía de Retratos.
+                    </p>
+                </div>
+
+                <div class="info-col">
+                    <p class="small-tag" data-t="rep_tag">¿TIENES PREGUNTAS?</p>
+                    <h2 data-t="rep_title">Representación</h2>
+                    <p data-t="rep_p1">
+                        Estoy representada por Andrea Carolla Agency.
+                    </p>
+                    <p data-t="rep_p2">
+                        Por favor, dirige todas las consultas a través del
+                        formulario de contacto a continuación.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Contact Form Section -->
+            <div class="contact-section" id="contacto">
+                <div class="contact-content">
+                    <h3 class="contact-heading" data-t="contact_title">
+                        Contacto
+                    </h3>
+
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-message" id="formMessage"></div>
+
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                placeholder="Nombre"
+                                data-t="form_name"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                                placeholder="Email"
+                                data-t="form_email"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="subject"
+                                name="subject"
+                                required
+                                placeholder="Asunto"
+                                data-t="form_subject"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <textarea
+                                id="message"
+                                name="message"
+                                required
+                                rows="4"
+                                maxlength="200"
+                                placeholder="Mensaje (máx. 200 caracteres)"
+                                data-t="form_message"></textarea>
+                            <div
+                                class="char-count"
+                                style="font-size: 10px; color: #999; text-align: right; margin-top: 5px;"
+                            >
+                                <span id="char-current">0</span>/200
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-button">
+                            <span class="button-text" data-t="form_submit"
+                                >Enviar</span
+                            >
+                            <span
+                                class="button-loading"
+                                style="display:none;"
+                                data-t="form_sending">Enviando...</span
+                            >
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Developer Footer -->
+        <footer class="developer-footer">
+            <div class="footer-content">
+                <p>
+                    &copy; 2026 Alejandra Balbontín | <span
+                        data-t="footer_rights">Fotografía Profesional</span
+                    >
+                </p>
+                <p class="dev-credits">
+                    <span data-t="footer_dev">Diseño y Desarrollo por</span>
+                    <a href="#" target="_blank">Tu Nombre / Agencia</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+</Layout>
+
+<style>
+    .info-container {
+        max-width: none;
+        padding: 0;
+        margin-top: -100px; /* Offset layout header margin */
+    }
+
+    .hero-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 64px;
+        font-weight: 300;
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    .hero-subtitle {
+        font-size: 18px;
+        font-weight: 300;
+        margin-top: 15px;
+        opacity: 0.8;
+    }
+
+    .content-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px 0 40px; /* Removed bottom padding for footer */
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 60px;
+        margin-bottom: 120px;
+    }
+
+    .small-tag {
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: #999;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .info-col h2 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-bottom: 25px;
+    }
+
+    .info-col p {
+        line-height: 1.8;
+        margin-bottom: 20px;
+        color: #666;
+        font-weight: 300;
+        font-size: 15px;
+    }
+
+    .contact-section {
+        max-width: 600px;
+        margin: 0 auto 120px;
+    }
+
+    .contact-heading {
+        font-size: 32px;
+        font-weight: 300;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .contact-description {
+        display: none;
+    }
+
+    .form-message {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 300;
+        display: none;
+    }
+
+    .form-message.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .form-message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 15px 0;
+        border: none;
+        border-bottom: 1px solid #eee;
+        font-size: 15px;
+        font-family: inherit;
+        background: transparent;
+        transition: border-color 0.3s;
+        font-weight: 300;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-bottom-color: #000;
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 20px;
+        background: #000;
+        color: white;
+        border: none;
+        font-size: 14px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: opacity 0.3s;
+    }
+
+    .submit-button:hover {
+        opacity: 0.8;
+    }
+
+    /* Developer Footer */
+    .developer-footer {
+        background: #000;
+        color: #fff;
+        padding: 60px 40px;
+        width: 100%;
+        text-align: center;
+        font-family: inherit;
+    }
+
+    .footer-content p {
+        font-size: 12px;
+        font-weight: 300;
+        margin-bottom: 10px;
+        opacity: 0.6;
+    }
+
+    .dev-credits a {
+        color: #fff;
+        text-decoration: underline;
+        transition: opacity 0.3s;
+    }
+
+    .dev-credits a:hover {
+        opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 40px;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .content-wrapper {
+            padding: 60px 20px 0 20px;
+        }
+    }
+</style>
+
+<script>
+    const form = document.getElementById("contactForm") as HTMLFormElement;
+    const formMessage = document.getElementById("formMessage");
+    const submitButton = form?.querySelector(
+        ".submit-button",
+    ) as HTMLButtonElement;
+    const buttonText = form?.querySelector(".button-text") as HTMLElement;
+    const buttonLoading = form?.querySelector(".button-loading") as HTMLElement;
+    const messageField = document.getElementById(
+        "message",
+    ) as HTMLTextAreaElement;
+    const charCounter = document.getElementById("char-current");
+
+    // Character counter
+    messageField?.addEventListener("input", () => {
+        if (charCounter)
+            charCounter.textContent = messageField.value.length.toString();
+    });
+
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const lang = document.documentElement.lang || "es";
+        // @ts-ignore - Assuming translations is global from Layout
+        const t = (window as any).translations?.[lang] || {};
+
+        if (submitButton) submitButton.disabled = true;
+        if (buttonText) buttonText.style.display = "none";
+        if (buttonLoading) buttonLoading.style.display = "inline";
+
+        if (formMessage) {
+            formMessage.classList.remove("success", "error");
+            formMessage.style.display = "none";
+        }
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                if (formMessage) {
+                    formMessage.textContent =
+                        t.form_success || "¡Mensaje enviado con éxito!";
+                    formMessage.classList.add("success");
+                }
+                form.reset();
+                if (charCounter) charCounter.textContent = "0";
+            } else {
+                throw new Error(result.message || t.form_error);
+            }
+        } catch (error) {
+            if (formMessage) {
+                formMessage.textContent =
+                    t.form_error || "Error al enviar el mensaje.";
+                formMessage.classList.add("error");
+            }
+        } finally {
+            if (formMessage) formMessage.style.display = "block";
+            if (submitButton) submitButton.disabled = false;
+            if (buttonText) buttonText.style.display = "inline";
+            if (buttonLoading) buttonLoading.style.display = "none";
+        }
+    });
+</script>

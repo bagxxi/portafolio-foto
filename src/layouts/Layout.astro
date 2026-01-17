@@ -1,0 +1,319 @@
+---
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const {
+    title,
+    description = "Fotografía profesional por Alejandra Balbontín",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title} - Alejandra Balbontín</title>
+        <script src="/js/image-protection.js" is:inline></script>
+    </head>
+    <body>
+        <div class="page">
+            <header id="menu_container">
+                <div class="menu_padding">
+                    <div class="header_container">
+                        <div id="logo">
+                            <a href="/">Alejandra Balbontín</a>
+                        </div>
+
+                        <nav class="nav">
+                            <ul id="menu" class="menu_list">
+                                <li class="item">
+                                    <a
+                                        href="/"
+                                        class="top_level_link"
+                                        data-t="nav_portraits"
+                                        >Fotografía a Color</a
+                                    >
+                                </li>
+                                <li class="item">
+                                    <a
+                                        href="/blanco-y-negro"
+                                        class="top_level_link"
+                                        data-t="nav_bw">Blanco y Negro</a
+                                    >
+                                </li>
+                                <li class="item">
+                                    <a
+                                        href="/info-contacto"
+                                        class="top_level_link"
+                                        data-t="nav_info">Info & Contacto</a
+                                    >
+                                </li>
+                                <li class="item social">
+                                    <a
+                                        href="https://www.instagram.com/alejandra_balbontin_fotografia"
+                                        target="_blank">Instagram</a
+                                    >
+                                </li>
+                                <li class="item language-switcher">
+                                    <a href="#" id="lang-toggle" data-lang="es"
+                                        >EN</a
+                                    >
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+
+            <main id="content">
+                <slot />
+            </main>
+        </div>
+
+        <script is:inline>
+            const translations = {
+                es: {
+                    nav_portraits: "Fotografía a Color",
+                    nav_bw: "Blanco y Negro",
+                    nav_info: "Info & Contacto",
+                    hero_title: "Fotografía a Color",
+                    hero_subtitle: "en Santiago de Chile",
+                    bio_tag: "UN POCO SOBRE MÍ",
+                    bio_title: "Biografía",
+                    bio_p1: "Soy una fotógrafa chilena, actualmente trabajando en Santiago de Chile.",
+                    bio_p2: "Conocida por mi trabajo en retratos, editorial y comercial, contribuyo regularmente a varias publicaciones impresas en Chile y el extranjero, así como en línea.",
+                    work_tag: "SOBRE MI PROCESO",
+                    work_title: "Mi Trabajo",
+                    work_p1:
+                        "Con un enfoque minimalista y sutil, me esfuerzo por crear un trabajo que sea claro y sin compromisos.",
+                    work_p2:
+                        "He recibido múltiples premios internacionales en fotografía de retratos y editorial, así como ganadora del Premio Miller 2018 por Fotografía de Retratos.",
+                    rep_tag: "¿TIENES PREGUNTAS?",
+                    rep_title: "Representación",
+                    rep_p1: "Estoy representada por Andrea Carolla Agency.",
+                    rep_p2: "Por favor, dirige todas las consultas a través del formulario de contacto a continuación.",
+                    contact_title: "Contacto",
+                    form_name: "Nombre",
+                    form_email: "Email",
+                    form_message: "Mensaje (máx. 200 caracteres)",
+                    form_submit: "Enviar",
+                    form_sending: "Enviando...",
+                    form_success:
+                        "¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.",
+                    form_error:
+                        "Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.",
+                    footer_rights: "Fotografía Profesional",
+                    footer_dev: "Diseño y Desarrollo por",
+                },
+                en: {
+                    nav_portraits: "Color Photography",
+                    nav_bw: "Black & White",
+                    nav_info: "Info & Contact",
+                    hero_title: "Color Photography",
+                    hero_subtitle: "in Santiago de Chile",
+                    bio_tag: "A LITTLE ABOUT ME",
+                    bio_title: "Biography",
+                    bio_p1: "I am a Chilean photographer, currently working in Santiago de Chile.",
+                    bio_p2: "Known for my work in portraits, editorial and commercial, I regularly contribute to various print publications in Chile and abroad, as well as online.",
+                    work_tag: "ABOUT MY PROCESS",
+                    work_title: "My Work",
+                    work_p1:
+                        "With a minimalist and subtle approach, I strive to create work that is clear and uncompromising.",
+                    work_p2:
+                        "I have received multiple international awards in portrait and editorial photography, as well as being the winner of the 2018 Miller Prize for Portrait Photography.",
+                    rep_tag: "HAVE QUESTIONS?",
+                    rep_title: "Representation",
+                    rep_p1: "I am represented by Andrea Carolla Agency.",
+                    rep_p2: "Please direct all inquiries through the contact form below.",
+                    contact_title: "Contact",
+                    form_name: "Name",
+                    form_email: "Email",
+                    form_message: "Message (max. 200 chars)",
+                    form_submit: "Send",
+                    form_sending: "Sending...",
+                    form_success:
+                        "Message sent successfully! I will get in touch soon.",
+                    form_error:
+                        "There was an error sending the message. Please try again.",
+                    footer_rights: "Professional Photography",
+                    footer_dev: "Design and Development by",
+                },
+            };
+
+            window.translations = translations;
+
+            function updateLanguage(lang) {
+                const elements = document.querySelectorAll("[data-t]");
+                elements.forEach((el) => {
+                    const key = el.getAttribute("data-t");
+                    if (translations[lang][key]) {
+                        if (
+                            el.tagName === "INPUT" ||
+                            el.tagName === "TEXTAREA"
+                        ) {
+                            el.placeholder = translations[lang][key];
+                        } else {
+                            el.textContent = translations[lang][key];
+                        }
+                    }
+                });
+
+                const langToggle = document.getElementById("lang-toggle");
+                if (langToggle) {
+                    langToggle.textContent = lang === "es" ? "EN" : "ES";
+                    langToggle.setAttribute("data-lang", lang);
+                }
+                document.documentElement.lang = lang;
+                localStorage.setItem("site-lang", lang);
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const currentLang = localStorage.getItem("site-lang") || "es";
+                updateLanguage(currentLang);
+
+                document
+                    .getElementById("lang-toggle")
+                    ?.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        const nextLang =
+                            document.documentElement.lang === "es"
+                                ? "en"
+                                : "es";
+                        updateLanguage(nextLang);
+                    });
+            });
+        </script>
+    </body>
+</html>
+
+<style is:global>
+    @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&family=Playfair+Display:wght@500;600;700&display=swap");
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family:
+            "Outfit",
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Arial,
+            sans-serif;
+        color: #333;
+        background: #fff;
+        overflow-x: hidden;
+    }
+
+    .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #menu_container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        z-index: 1000;
+    }
+
+    .menu_padding {
+        padding: 30px 40px;
+    }
+
+    .header_container {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        max-width: 100%;
+    }
+
+    #logo a {
+        text-decoration: none;
+        color: #1a1a1a;
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: color 0.3s ease;
+    }
+
+    #logo a:hover {
+        color: #000;
+    }
+
+    .menu_list {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .menu_list a {
+        text-decoration: none;
+        color: #888;
+        font-size: 14px;
+        font-weight: 300;
+        transition: color 0.3s;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .menu_list a:hover {
+        color: #000;
+    }
+
+    #content {
+        flex: 1;
+        margin-top: 100px;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px;
+    }
+
+    .footer_text {
+        padding: 20px;
+        text-align: center;
+        color: #999;
+        font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+        .menu_padding {
+            padding: 15px 20px;
+        }
+
+        .header_container {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu_list {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #content {
+            margin-top: 120px;
+        }
+    }
+</style>

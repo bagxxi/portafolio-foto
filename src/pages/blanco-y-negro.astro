@@ -1,0 +1,198 @@
+---
+import Layout from "../layouts/Layout.astro";
+import OptimizedImage from "../components/OptimizedImage.astro";
+
+const blackAndWhite = [
+    { id: 1, src: "/images/bw/02.jpg", alt: "Blanco y Negro 1" },
+    { id: 2, src: "/images/bw/08.jpg", alt: "Blanco y Negro 2" },
+    { id: 3, src: "/images/bw/10.jpg", alt: "Blanco y Negro 3" },
+    { id: 4, src: "/images/bw/12.jpg", alt: "Blanco y Negro 4" },
+];
+---
+
+<Layout
+    title="Blanco y Negro"
+    description="Fotografía en blanco y negro por Alejandra Balbontín"
+>
+    <!-- Incluir CSS de jScrollPane -->
+    <link rel="stylesheet" href="/css/jscrollpane.css" slot="head" />
+
+    <div class="container clearfix loaded">
+        <div class="assets">
+            <div id="assets_wrap" class="horizontal-scroll">
+                {
+                    blackAndWhite.map((photo, index) => (
+                        <div class="asset image" data-orientation="portrait">
+                            <div class="wrap">
+                                <div class="img">
+                                    <OptimizedImage
+                                        src={photo.src}
+                                        alt={photo.alt}
+                                        loading={index === 0 ? "eager" : "lazy"}
+                                        fetchpriority={
+                                            index === 0 ? "high" : "auto"
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .container {
+        max-width: none;
+        width: 100%;
+        height: calc(100vh - 100px);
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .assets {
+        width: 100%;
+        height: 100%;
+    }
+
+    #assets_wrap {
+        height: 100%;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: auto;
+        padding: 0 40px 0 40px;
+        display: flex;
+        align-items: stretch;
+    }
+
+    .asset {
+        display: inline-block;
+        width: 33.33vw; /* Un tercio del ancho de pantalla */
+        height: 100%;
+        margin-right: 15px;
+        flex-shrink: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .asset:last-child {
+        margin-right: 0;
+    }
+
+    .wrap {
+        width: 100%;
+        height: 100%;
+    }
+
+    .img {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        background: #f0f0f0;
+    }
+
+    .img img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(100%);
+    }
+
+    /* Ocultar scrollbar nativa pero mantener funcionalidad */
+    #assets_wrap::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    #assets_wrap::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    #assets_wrap::-webkit-scrollbar-thumb {
+        background: #eee;
+        border-radius: 3px;
+    }
+
+    @media (max-width: 1024px) {
+        .asset {
+            width: 50vw; /* Dos de ancho en tablets */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .asset {
+            width: 85vw; /* Casi pantalla completa en móviles */
+        }
+
+        #assets_wrap {
+            padding: 0 20px 0 20px;
+        }
+    }
+</style>
+
+<script>
+    // Script para convertir scroll vertical (rueda del mouse) en horizontal
+    document.addEventListener("DOMContentLoaded", function () {
+        const scrollContainer = document.getElementById("assets_wrap");
+
+        if (scrollContainer) {
+            // Prevenir scroll vertical en la página
+            document.body.style.overflow = "hidden";
+
+            // Convertir scroll vertical a horizontal con la rueda del mouse
+            scrollContainer.addEventListener(
+                "wheel",
+                function (e) {
+                    // Prevenir scroll vertical por defecto
+                    e.preventDefault();
+
+                    // Aplicar el delta vertical como scroll horizontal
+                    const delta = e.deltaY;
+
+                    // Scroll horizontal con velocidad ajustable
+                    scrollContainer.scrollLeft += delta;
+                },
+                { passive: false },
+            );
+
+            // Soportar swipe horizontal en touch devices
+            let touchStartX = 0;
+            let scrollLeftStart = 0;
+
+            scrollContainer.addEventListener(
+                "touchstart",
+                function (e) {
+                    touchStartX = e.touches[0].pageX;
+                    scrollLeftStart = scrollContainer.scrollLeft;
+                },
+                { passive: true },
+            );
+
+            scrollContainer.addEventListener(
+                "touchmove",
+                function (e) {
+                    const touchX = e.touches[0].pageX;
+                    const walk = touchStartX - touchX;
+                    scrollContainer.scrollLeft = scrollLeftStart + walk;
+                },
+                { passive: true },
+            );
+
+            // Smooth scroll con teclado
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    scrollContainer.scrollBy({
+                        left: -300,
+                        behavior: "smooth",
+                    });
+                } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    scrollContainer.scrollBy({ left: 300, behavior: "smooth" });
+                }
+            });
+        }
+    });
+</script>
