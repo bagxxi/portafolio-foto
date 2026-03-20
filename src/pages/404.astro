@@ -1,0 +1,77 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="404 - Página no encontrada">
+    <div class="error-container">
+        <div class="error-content">
+            <h1>404</h1>
+            <p>Lo sentimos, la página que buscas no existe o ha sido movida.</p>
+            <div class="divider"></div>
+            <a href="/" class="back-home">Volver al Inicio</a>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .error-container {
+        height: calc(100vh - 200px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        text-align: center;
+    }
+
+    .error-content h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 120px;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1;
+        color: #1a1a1a;
+        letter-spacing: -2px;
+    }
+
+    .error-content p {
+        font-size: 18px;
+        font-weight: 300;
+        color: #888;
+        margin-top: 20px;
+        max-width: 400px;
+    }
+
+    .divider {
+        width: 40px;
+        height: 1px;
+        background: #1a1a1a;
+        margin: 40px auto;
+    }
+
+    .back-home {
+        text-decoration: none;
+        color: #1a1a1a;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-bottom: 1px solid #1a1a1a;
+        padding-bottom: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .back-home:hover {
+        color: #888;
+        border-bottom-color: #888;
+    }
+
+    @media (max-width: 768px) {
+        .error-content h1 {
+            font-size: 80px;
+        }
+        
+        .error-content p {
+            font-size: 16px;
+        }
+    }
+</style>
